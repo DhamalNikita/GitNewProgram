@@ -1,0 +1,197 @@
+mysql> use june2024;
+Database changed
+mysql> select * from student1;
++-----+--------+------------------+-----------+---------+
+| sid | name   | email            | contact   | address |
++-----+--------+------------------+-----------+---------+
+|   1 | ram    | ram@gmail.com    | 453785773 | pune    |
+|   2 | shyam  | shyam@gmail.com  |   5436731 | nashik  |
+|   3 | dinesh | dinesh@gmail.com |  54336731 | mumbai  |
++-----+--------+------------------+-----------+---------+
+3 rows in set (0.02 sec)
+
+mysql> select * from course1;
++----------+------+-------+
+| courseid | name | fees  |
++----------+------+-------+
+|        1 | java | 26000 |
+|        2 | php  | 26000 |
+|        3 | .net | 26000 |
++----------+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> update course1 set fees=40000 where coursid=1;
+ERROR 1054 (42S22): Unknown column 'coursid' in 'where clause'
+mysql> update course1 set fees=40000 where coursed=1;
+ERROR 1054 (42S22): Unknown column 'coursed' in 'where clause'
+mysql> update course1 set fees=40000 where coursed=1;
+ERROR 1054 (42S22): Unknown column 'coursed' in 'where clause'
+mysql> update course1 set fees=40000 where courseid=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from course1;
++----------+------+-------+
+| courseid | name | fees  |
++----------+------+-------+
+|        1 | java | 40000 |
+|        2 | php  | 26000 |
+|        3 | .net | 26000 |
++----------+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select course,from course;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from course' at line 1
+mysql> select course,from course1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from course1' at line 1
+mysql> select * from student1;
++-----+--------+------------------+-----------+---------+
+| sid | name   | email            | contact   | address |
++-----+--------+------------------+-----------+---------+
+|   1 | ram    | ram@gmail.com    | 453785773 | pune    |
+|   2 | shyam  | shyam@gmail.com  |   5436731 | nashik  |
+|   3 | dinesh | dinesh@gmail.com |  54336731 | mumbai  |
++-----+--------+------------------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from csjoin;
++------+------+------+
+| sid  | cid  | pid  |
++------+------+------+
+|    1 |    1 |    1 |
+|    1 |    2 |    2 |
+|    2 |    1 |    1 |
+|    2 |    2 |    2 |
++------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from placement1;
++-----+----------+---------+------------+
+| pid | compname | package | pdate      |
++-----+----------+---------+------------+
+|   1 | TCS      |  400000 | 2020-01-01 |
+|   2 | Infosys  |  360000 | 2020-02-01 |
++-----+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select s.sid as 'Student List', c.courseid as 'Course name' from student1 s inner join csjoin cj on s.sid=c=cj.sid inner join course1 c on c.courseid=cj.cid;
+ERROR 1054 (42S22): Unknown column 'c' in 'on clause'
+mysql> select s.sid as 'Student List', c.courseid as 'Course name' from student1 s inner join csjoin cj on s.sid=c=cj.sid inner join course1 c on c.courseid=cj.cid;
+ERROR 1054 (42S22): Unknown column 'c' in 'on clause'
+mysql> select s.sid as 'Student List', c.courseid as 'Course name' from student1 s inner join csjoin cj on s.sid=c=cj.sid inner join course1 c on c.courseid=cj.cid;
+ERROR 1054 (42S22): Unknown column 'c' in 'on clause'
+mysql> select c.name as 'Course name',s.name as 'Student name' cj.pid as 'Placement count' from csjoin cj join course1 c on c.courseid=cj.pid join student1 s on s.sid=cj.pid where pid(select min(cj.pid)from csjoin c);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cj.pid as 'Placement count' from csjoin cj join course1 c on c.courseid=cj.pid j' at line 1
+mysql> select c.name as 'Course name',s.name as 'Student name', cj.pid as 'Placement count' from csjoin cj join course1 c on c.courseid=cj.pid join student1 s on s.sid=cj.pid where pid(select min(cj.pid)from csjoin c);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select min(cj.pid)from csjoin c)' at line 1
+mysql> select c.name as 'Course name',s.name as 'Student name', cj.pid as 'Placement count' from csjoin cj join course1 c on c.courseid=cj.pid join student1 s on s.sid=cj.pid where pid=(select min(cj.pid)from csjoin c);
++-------------+--------------+-----------------+
+| Course name | Student name | Placement count |
++-------------+--------------+-----------------+
+| java        | ram          |               1 |
+| java        | ram          |               1 |
+| php         | shyam        |               2 |
+| php         | shyam        |               2 |
++-------------+--------------+-----------------+
+4 rows in set (0.01 sec)
+
+mysql> Write SQL Query to show the student list course wise that got minimum single offer?
+    -> ^C
+mysql> select s.name as 'Student List' , c.name as 'Course name' ,cj.pid as 'offer' from csjoin cj join student 1 s on s.sid=cj.pid join course1 c on c.courseid=cj.pid where pid=(select min(cj.pid)from csjoin c);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1 s on s.sid=cj.pid join course1 c on c.courseid=cj.pid where pid=(select min(cj' at line 1
+mysql> select s.name as 'Student List' , c.name as 'Course name' ,cj.pid as 'offer' from csjoin cj join student 1 s on s.sid=cj.pid join course1 c on c.courseid=cj.pid where pid=(select min(cj.pid)from csjoin c);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1 s on s.sid=cj.pid join course1 c on c.courseid=cj.pid where pid=(select min(cj' at line 1
+mysql> select s.name as 'Student List' , c.name as 'Course name' ,cj.pid as 'offer' from csjoin cj join student1 s on s.sid=cj.pid join course1 c on c.courseid=cj.pid where pid=(select min(cj.pid)from csjoin c);
++--------------+-------------+-------+
+| Student List | Course name | offer |
++--------------+-------------+-------+
+| ram          | java        |     1 |
+| ram          | java        |     1 |
+| shyam        | php         |     2 |
+| shyam        | php         |     2 |
++--------------+-------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> **Write SQL Query to show the course name that having highest placement?
+    -> **;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '**Write SQL Query to show the course name that having highest placement?
+**' at line 1
+mysql> Write SQL Query to show the course name that having highest placement?
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Write SQL Query to show the course name that having highest placement?' at line 1
+mysql> Write SQL Query to show the course name that having highest placement?
+    -> ^C
+mysql> select s.name as 'Student List' , c.name as 'Course name' ,cj.pid as 'offer' from csjoin cj join student1 s on s.sid=cj.pid join course1 c on c.courseid=cj.pid where pid=(select min(cj.pid)=1from csjoin c);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'c)' at line 1
+mysql> select s.name as 'Student List' , c.name as 'Course name' ,cj.pid as 'offer' from csjoin cj join student1 s on s.sid=cj.pid join course1 c on c.courseid=cj.pid where pid=(select min(cj.pid)=1 from csjoin c);
++--------------+-------------+-------+
+| Student List | Course name | offer |
++--------------+-------------+-------+
+| ram          | java        |     1 |
+| ram          | java        |     1 |
++--------------+-------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> Write SQL Query to show the course name that having highest placement?
+    -> ^C
+mysql> select c.name as 'course name' ,cj.pid as 'highest placement' from csjoin cj join course1 c on c.courseid=cj.pid where pid(select max(cj.pid)from csjoin);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select max(cj.pid)from csjoin)' at line 1
+mysql> select c.name as 'course name' ,cj.pid as 'highest placement' from csjoin cj join course1 c on c.courseid=cj.pid where pid=(select max(cj.pid)from csjoin);
++-------------+-------------------+
+| course name | highest placement |
++-------------+-------------------+
+| java        |                 1 |
+| java        |                 1 |
+| php         |                 2 |
+| php         |                 2 |
++-------------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql> select c.name as 'course name' ,cj.pid as 'highest placement' from csjoin cj join course1 c on c.courseid=cj.pid where pid=(select max(cj.pid)>1 from csjoin);
+Empty set (0.00 sec)
+
+mysql> select c.name as 'course name' ,cj.pid as 'highest placement' from csjoin cj join course1 c on c.courseid=cj.pid where pid=(select max(cj.pid)>0 from csjoin);
++-------------+-------------------+
+| course name | highest placement |
++-------------+-------------------+
+| java        |                 1 |
+| java        |                 1 |
++-------------+-------------------+
+2 rows in set (0.00 sec)
+
+mysql> Write SQL Query to show placed student list of year 2020?
+    -> ^C
+mysql> select * from placement1;
++-----+----------+---------+------------+
+| pid | compname | package | pdate      |
++-----+----------+---------+------------+
+|   1 | TCS      |  400000 | 2020-01-01 |
+|   2 | Infosys  |  360000 | 2020-02-01 |
++-----+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select count(p.pdate),p.pdate from placement1 p group by p.pdate;
++----------------+------------+
+| count(p.pdate) | pdate      |
++----------------+------------+
+|              1 | 2020-01-01 |
+|              1 | 2020-02-01 |
++----------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select s.name as 'student list' , s.sid as 'student id' , p.pdate as 'year' from placement1 p join student1 s on s.sid=p.pid where pdate like "%2020%;
+    "> select s.name as 'student list' , s.sid as 'student id' , p.pdate as 'year' from placement1 p join student1 s on s.sid=p.pid where pdate like "%2020%;^C
+mysql> select s.name as 'student list' , s.sid as 'student id' , p.pdate as 'year' from placement1 p join student1 s on s.sid=p.pid where pdate like "%2020%';
+    "> ^C
+mysql> select s.name as 'student list' , s.sid as 'student id' , p.pdate as 'year' from placement1 p join student1 s on s.sid=p.pid where pdate like "%2020%";
++--------------+------------+------------+
+| student list | student id | year       |
++--------------+------------+------------+
+| ram          |          1 | 2020-01-01 |
+| shyam        |          2 | 2020-02-01 |
++--------------+------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> Write SQL Query to show placed student list of year 2020?
+    -> ^C
+mysql>

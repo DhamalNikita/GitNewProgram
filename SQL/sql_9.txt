@@ -1,0 +1,440 @@
+mysql> use june2024;
+Database changed
+mysql> select * from course1;
++----------+------+-------+
+| courseid | name | fees  |
++----------+------+-------+
+|        1 | java | 26000 |
+|        2 | php  | 26000 |
+|        3 | .net | 26000 |
++----------+------+-------+
+3 rows in set (0.01 sec)
+
+mysql> select * from student1;
++-----+--------+------------------+-----------+---------+
+| sid | name   | email            | contact   | address |
++-----+--------+------------------+-----------+---------+
+|   1 | ram    | ram@gmail.com    | 453785773 | pune    |
+|   2 | shyam  | shyam@gmail.com  |   5436731 | nashik  |
+|   3 | dinesh | dinesh@gmail.com |  54336731 | mumbai  |
++-----+--------+------------------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select c.name as 'Course Name', count(s.sid) as 'Student Count' from student1 right join csjoin cj on s.sid=cj.sid right join course1 c on c.courseid=cj.cid group by c.name having count(c.name)=0;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'field list'
+mysql> select c.name as 'Course Name', count(s.sid) as 'Student Count' from student1 s right join csjoin cj on s.sid=cj.sid right join course1 c on c.courseid=cj.cid group by c.name having count(c.name)=0;
+Empty set (0.00 sec)
+
+mysql> select c.name as 'Course Name', count(s.sid) as 'Student Count' from student1 s right join csjoin cj on s.sid=cj.sid right join course1 c on c.courseid=cj.cid group by s.sid having count(s.sid)=0;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'june2024.c.name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select c.name as 'Course Name', count(s.sid) as 'Student Count' from student1 s right join csjoin cj on s.sid=cj.sid right join course1 c on c.courseid=cj.cid group by c.name having count(s.name)=0;
++-------------+---------------+
+| Course Name | Student Count |
++-------------+---------------+
+| .net        |             0 |
++-------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select c.name as 'Course Name', count(s.sid) as 'Student Count' from student1 s right join csjoin cj on s.sid=cj.sid right join course1 c on c.courseid=cj.cid group by c.name having count(s.sid)=0;
++-------------+---------------+
+| Course Name | Student Count |
++-------------+---------------+
+| .net        |             0 |
++-------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> select * from student1;
++-----+--------+------------------+-----------+---------+
+| sid | name   | email            | contact   | address |
++-----+--------+------------------+-----------+---------+
+|   1 | ram    | ram@gmail.com    | 453785773 | pune    |
+|   2 | shyam  | shyam@gmail.com  |   5436731 | nashik  |
+|   3 | dinesh | dinesh@gmail.com |  54336731 | mumbai  |
++-----+--------+------------------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from placement1;
++-----+----------+---------+------------+
+| pid | compname | package | pdate      |
++-----+----------+---------+------------+
+|   1 | TCS      |  360000 | 2020-01-01 |
+|   2 | Infosys  |  360000 | 2020-02-01 |
++-----+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select s.name, p.package from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid order by p.package desc limit1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'limit1' at line 1
+mysql> select s.name, p.package from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid order by p.package desc limit 1;
++------+---------+
+| name | package |
++------+---------+
+| ram  |  360000 |
++------+---------+
+1 row in set (0.00 sec)
+
+mysql> select s.name, p.package from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid order by p.package desc limit 3;
++-------+---------+
+| name  | package |
++-------+---------+
+| ram   |  360000 |
+| ram   |  360000 |
+| shyam |  360000 |
++-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select s.name, p.package from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid order by p.package desc limit 1 offset 1;
++------+---------+
+| name | package |
++------+---------+
+| ram  |  360000 |
++------+---------+
+1 row in set (0.00 sec)
+
+mysql> select s.name, p.package from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid order by p.package desc limit 1 offset 2;
++-------+---------+
+| name  | package |
++-------+---------+
+| shyam |  360000 |
++-------+---------+
+1 row in set (0.00 sec)
+
+mysql> select s.name, p.package from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid order by p.package desc limit 1;
++------+---------+
+| name | package |
++------+---------+
+| ram  |  360000 |
++------+---------+
+1 row in set (0.00 sec)
+
+mysql> select s.name, p.package from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid order by p.package desc limit 1 offset 1;
++------+---------+
+| name | package |
++------+---------+
+| ram  |  360000 |
++------+---------+
+1 row in set (0.00 sec)
+
+mysql> select s.name, p.package from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid order by p.package desc limit 1 offset 2;
++-------+---------+
+| name  | package |
++-------+---------+
+| shyam |  360000 |
++-------+---------+
+1 row in set (0.00 sec)
+
+mysql> select s.name, p.package from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid order by p.package desc limit 1 offset 3;
++-------+---------+
+| name  | package |
++-------+---------+
+| shyam |  360000 |
++-------+---------+
+1 row in set (0.00 sec)
+
+mysql> select s.name, p.package from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid order by p.package desc limit 2 offset 3;
++-------+---------+
+| name  | package |
++-------+---------+
+| shyam |  360000 |
++-------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from placement1;
++-----+----------+---------+------------+
+| pid | compname | package | pdate      |
++-----+----------+---------+------------+
+|   1 | TCS      |  360000 | 2020-01-01 |
+|   2 | Infosys  |  360000 | 2020-02-01 |
++-----+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select s.name as 'Student name',p.package as 'highest package' from student1 s inner join placement1 p on s.sid=p.id where p.package(select distinct(package) from placement1 order by package desc limit 0,1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select distinct(package) from placement1 order by package desc limit 0,1)' at line 1
+mysql> select s.name as 'Student name',p.package as 'highest package' from student1 s inner join placement1 p on s.sid=p.id where p.package=(select distinct(package) from placement1 order by package desc limit 0,1);
+ERROR 1054 (42S22): Unknown column 'p.id' in 'on clause'
+mysql> select s.name as 'Student name',p.package as 'highest package' from student1 s inner join placement1 p on s.sid=p.pid where p.package=(select distinct(package) from placement1 order by package desc limit 0,1);
++--------------+-----------------+
+| Student name | highest package |
++--------------+-----------------+
+| ram          |          360000 |
+| shyam        |          360000 |
++--------------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> select s.name as 'Student name',p.package as 'highest package' from student1 s inner join placement1 p on s.sid=p.pid where p.package=(select distinct(package) from placement1 order by package desc limit 0,2);
++--------------+-----------------+
+| Student name | highest package |
++--------------+-----------------+
+| ram          |          360000 |
+| shyam        |          360000 |
++--------------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> select s.name as 'Student name',p.package as 'highest package' from student1 s inner join placement1 p on s.sid=p.pid where p.package=(select distinct(package) from placement1 order by package desc limit 0,3);
++--------------+-----------------+
+| Student name | highest package |
++--------------+-----------------+
+| ram          |          360000 |
+| shyam        |          360000 |
++--------------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> select s.name as 'Student name',p.package as 'highest package' from student1 s inner join placement1 p on s.sid=p.pid where p.package=(select distinct(package) from placement1 order by package desc limit 1,3);
+Empty set (0.00 sec)
+
+mysql> select s.name as 'Student name',p.package as 'highest package' from student1 s inner join placement1 p on s.sid=p.pid where p.package=(select distinct(package) from placement1 order by package desc limit 1,1);
+Empty set (0.00 sec)
+
+mysql> select s.name as 'Student name',p.package as 'highest package' from student1 s inner join placement1 p on s.sid=p.pid where p.package=(select distinct(package) from placement1 order by package desc limit 1,0);
+Empty set (0.00 sec)
+
+mysql> select s.name as 'Student name',p.package as 'highest package' from student1 s inner join placement1 p on s.sid=p.pid where p.package=(select distinct(package) from placement1 order by package desc limit 0,0);
+Empty set (0.00 sec)
+
+mysql> select s.name as 'Student name',p.package as 'highest package' from student1 s inner join placement1 p on s.sid=p.pid where p.package=(select distinct(package) from placement1 order by package desc limit 0,1);
++--------------+-----------------+
+| Student name | highest package |
++--------------+-----------------+
+| ram          |          360000 |
+| shyam        |          360000 |
++--------------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from placement1;
++-----+----------+---------+------------+
+| pid | compname | package | pdate      |
++-----+----------+---------+------------+
+|   1 | TCS      |  360000 | 2020-01-01 |
+|   2 | Infosys  |  360000 | 2020-02-01 |
++-----+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> update placement1 set package=400000 where id=1;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> update placement1 set package=400000 where pid=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from placement1;
++-----+----------+---------+------------+
+| pid | compname | package | pdate      |
++-----+----------+---------+------------+
+|   1 | TCS      |  400000 | 2020-01-01 |
+|   2 | Infosys  |  360000 | 2020-02-01 |
++-----+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select min(package) from placement1;
++--------------+
+| min(package) |
++--------------+
+|       360000 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select s.name as 'student name' ,p.package as 'mimimum package' from student1 inner join placement1 p on s.sid=p.pid where p.package(select min(package) from placement1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select min(package) from placement1)' at line 1
+mysql> select s.name as 'student name' ,p.package as 'mimimum package' from student1 inner join placement1 p on s.sid=p.pid where p.package=(select min(package) from placement1);
+ERROR 1054 (42S22): Unknown column 's.name' in 'field list'
+mysql> select s.name as 'student name' ,p.package as 'mimimum package' from student1 s inner join placement1 p on s.sid=p.pid where p.package=(select min(package) from placement1);
++--------------+-----------------+
+| student name | mimimum package |
++--------------+-----------------+
+| shyam        |          360000 |
++--------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql> select s.name as 'student name' ,p.package as 'mimimum package' from student1 s inner join csjoin cj on s.sid=cj.sid inner join  placement1 p on p.pid=cj.pid where p.package=(select min(package) from placement1);
++--------------+-----------------+
+| student name | mimimum package |
++--------------+-----------------+
+| ram          |          360000 |
+| shyam        |          360000 |
++--------------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> select s.name AS 'student list' ,p.package AS 'Package' from student1 s inner join placement1 p on s.sid=p.pid where p.package>300000;
++--------------+---------+
+| student list | Package |
++--------------+---------+
+| ram          |  400000 |
+| shyam        |  360000 |
++--------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select s.name, p.package from student1 s inner join placement1 p on s.sid=p.pid where p.package desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select s.name, p.package from student1 s inner join placement1 p on s.sid=p.pid where p.package= desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select s.name, p.package from student1 s inner join placement1 p on s.sid=p.pid where p.package desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select s.name, p.package from student1 s inner join placement1 p on s.sid=p.pid;
++-------+---------+
+| name  | package |
++-------+---------+
+| ram   |  400000 |
+| shyam |  360000 |
++-------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select s.name, p.package from student1 s inner join placement1 p on s.sid=p.pid des;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'des' at line 1
+mysql> select s.name, p.package from student1 s inner join placement1 p on s.sid=p.pid desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select s.name, p.package from student1 s inner join placement1 p on s.sid=p.pid order by p.package desc;
++-------+---------+
+| name  | package |
++-------+---------+
+| ram   |  400000 |
+| shyam |  360000 |
++-------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select s.name, p.package from student1 s inner join placement1 p on s.sid=p.pid order by p.package asc;
++-------+---------+
+| name  | package |
++-------+---------+
+| shyam |  360000 |
+| ram   |  400000 |
++-------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * fro placement1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'fro placement1' at line 1
+mysql> select * from placement1;
++-----+----------+---------+------------+
+| pid | compname | package | pdate      |
++-----+----------+---------+------------+
+|   1 | TCS      |  400000 | 2020-01-01 |
+|   2 | Infosys  |  360000 | 2020-02-01 |
++-----+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select c.compname as 'Company name',count(s.sid) as 'Student count' from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by c.compname having oreder by count(s.sid)>=0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'by count(s.sid)>=0' at line 1
+mysql> select c.compname as 'Company name',count(s.sid) as 'Student count' from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by c.compname having order by count(s.sid)>=0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by count(s.sid)>=0' at line 1
+mysql> select c.compname as 'Company name',count(s.sid) as 'Student count' from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by c.compname having count(s.sid)>=0;
+ERROR 1054 (42S22): Unknown column 'c.compname' in 'field list'
+mysql> select c.name as 'Company name',count(s.sid) as 'Student count' from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by c.name having count(s.sid)>=0;
+ERROR 1054 (42S22): Unknown column 'c.name' in 'field list'
+mysql> select c.compname as 'Company name',count(s.sid) as 'Student count' from student1 c inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by c.compname having count(s.sid)>=0;
+ERROR 1054 (42S22): Unknown column 'c.compname' in 'field list'
+mysql> select c.compname as 'Company name',count(s.sid) as 'Student count' from student1 c inner join csjoin cj on c.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by c.compname having count(s.sid)>=0;
+ERROR 1054 (42S22): Unknown column 'c.compname' in 'field list'
+mysql> select c.name as 'Company name',count(s.sid) as 'Student count' from student1 c inner join csjoin cj on c.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by c.name having count(s.sid)>=0;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'field list'
+mysql> select p.compname as 'Company name', count(s.sid) as 'Student count' from student1 s inner join csjoin cj on s.sid=cj.sid inner count placement1 p on p.pid=cj.pid group by p.compname having order by count(s.sid)>=0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'count placement1 p on p.pid=cj.pid group by p.compname having order by count(s.s' at line 1
+mysql> select p.compname as 'Company name', count(s.sid) as 'Student count' from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by p.compname having order by count(s.sid)>=0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by count(s.sid)>=0' at line 1
+mysql> select c.name as 'Company name',count(s.sid) as 'Student count' from student1 c inner join csjoin cj on c.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by c.name having order by count(s.sid)>=0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by count(s.sid)>=0' at line 1
+mysql> select c.name as 'Company name',count(s.sid) as 'Student count' from student1 c inner join csjoin cj on c.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by c.name having count(s.sid)>=0;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'field list'
+mysql> select c.name as 'Company name',count(s.sid) as 'Student count' from student1 c inner join csjoin cj on c.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by c.name having count(s.sid)>=0;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'field list'
+mysql> select count(s.name)from student1s;
+ERROR 1146 (42S02): Table 'june2024.student1s' doesn't exist
+mysql> select count(s.name)from student1;
+ERROR 1054 (42S22): Unknown column 's.name' in 'field list'
+mysql> select student1 count(name);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'count(name)' at line 1
+mysql> select count(name)from student1;
++-------------+
+| count(name) |
++-------------+
+|           3 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select p.compname ,count(s.sid) from student1 inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by p.compname having count(s.sid)>=0;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'field list'
+mysql> select p.compname ,count(s.sid) from student1 inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by p.compname having count(s.name)>=0;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'field list'
+mysql> select p.compname ,count(s.sid) from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by p.compname having count(s.name)>=0;
++----------+--------------+
+| compname | count(s.sid) |
++----------+--------------+
+| TCS      |            2 |
+| Infosys  |            2 |
++----------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select p.compname ,count(s.sid) from student1 s inner join csjoin cj on s.sid=cj.sid inner join placement1 p on p.pid=cj.pid group by p.compname having count(s.sid)>=0;
++----------+--------------+
+| compname | count(s.sid) |
++----------+--------------+
+| TCS      |            2 |
+| Infosys  |            2 |
++----------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student1;
++-----+--------+------------------+-----------+---------+
+| sid | name   | email            | contact   | address |
++-----+--------+------------------+-----------+---------+
+|   1 | ram    | ram@gmail.com    | 453785773 | pune    |
+|   2 | shyam  | shyam@gmail.com  |   5436731 | nashik  |
+|   3 | dinesh | dinesh@gmail.com |  54336731 | mumbai  |
++-----+--------+------------------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from placement1;
++-----+----------+---------+------------+
+| pid | compname | package | pdate      |
++-----+----------+---------+------------+
+|   1 | TCS      |  400000 | 2020-01-01 |
+|   2 | Infosys  |  360000 | 2020-02-01 |
++-----+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from course1;
++----------+------+-------+
+| courseid | name | fees  |
++----------+------+-------+
+|        1 | java | 26000 |
+|        2 | php  | 26000 |
+|        3 | .net | 26000 |
++----------+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select cid,count(pid) from csjoin group by cid;
++------+------------+
+| cid  | count(pid) |
++------+------------+
+|    1 |          2 |
+|    2 |          2 |
++------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select c.name as 'Course Name'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

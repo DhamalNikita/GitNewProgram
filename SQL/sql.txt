@@ -1,0 +1,501 @@
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.40 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use june2024;
+Database changed
+mysql> select max(s.sid)from student1 s;
++------------+
+| max(s.sid) |
++------------+
+|          3 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select max(s.sid) as 'student placed' from student1 s;
++----------------+
+| student placed |
++----------------+
+|              3 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select * from placement1;
++-----+----------+---------+------------+
+| pid | compname | package | pdate      |
++-----+----------+---------+------------+
+|   1 | TCS      |  400000 | 2020-01-01 |
+|   2 | Infosys  |  360000 | 2020-02-01 |
++-----+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table placement1 add Year(10) ^C
+mysql> select year(pdate) from placement1;
++-------------+
+| year(pdate) |
++-------------+
+|        2020 |
+|        2020 |
++-------------+
+2 rows in set (0.01 sec)
+
+mysql> select p.pdate as 'year',s.sid as 'student palced' from student1 s inner join csjoin cj on p.pid=cj.pid inner join student1 s on s.sid=cj.sid where p.pid=select year(pdate) from placement1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select year(pdate) from placement1' at line 1
+mysql> select max(count(s.sid)) from placement1;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'field list'
+mysql> select max(count(s.sid)) as 'student1 s' from placement1;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'field list'
+mysql> select max(count(s.sid)) as 'student1 s' from placement1;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'field list'
+mysql> select max(count(s.sid))as 'Student1 s ' from placement1;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'field list'
+mysql> select p.pdate a 'year', s.sid as 'student placed' from student1 s inner join csjoin cj on p.pid=cj.pid where p.pdate=(select year(p.pdate)from placement1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''year', s.sid as 'student placed' from student1 s inner join csjoin cj on p.pid=' at line 1
+mysql> select p.pdate a 'year', s.sid as 'student placed' from student1 s inner join csjoin cj on p.pid=cj.pid where p.pdate=(select year(p.pdate)from student1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''year', s.sid as 'student placed' from student1 s inner join csjoin cj on p.pid=' at line 1
+mysql> select p.pdate a 'year', s.sid as 'student placed' from student1 s inner join student1 s on p.pid=s.sid where p.pdate=(select year(p.pdate)from student1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''year', s.sid as 'student placed' from student1 s inner join student1 s on p.pid' at line 1
+mysql> select p.pdate a 'year', s.sid as 'student placed' from student1 s inner join student1 s on p.pid=s.sid where pdate=(select year(p.pdate)from student1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''year', s.sid as 'student placed' from student1 s inner join student1 s on p.pid' at line 1
+mysql> select p.pdate a 'year', s.sid as 'student placed' from placement1 s inner join student1 s on p.pid=s.sid where pdate=(select year(p.pdate)from student1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''year', s.sid as 'student placed' from placement1 s inner join student1 s on p.p' at line 1
+mysql> select p.pdate a 'year', s.sid as 'student placed' from placement1 p inner join student1 s on p.pid=s.sid where pdate=(select year(p.pdate)from student1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''year', s.sid as 'student placed' from placement1 p inner join student1 s on p.p' at line 1
+mysql> select p.pdate a 'year', s.sid as 'student placed' from placement1 p inner join student1 s on p.pid=s.sid where pdate=(select year(p.pdate)from student1);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''year', s.sid as 'student placed' from placement1 p inner join student1 s on p.p' at line 1
+mysql> select p.pdate as 'year', s.sid as 'student placed' from placement1 p inner join student1 s on p.pid=s.sid where pdate=(select year(p.pdate)from student1);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> select p.pdate as 'year', s.sid as 'student placed' from placement1 p inner join student1 s on p.pid=s.sid where pdate=(select max(p.pdate)from student1);
++------------+----------------+
+| year       | student placed |
++------------+----------------+
+| 2020-01-01 |              1 |
+| 2020-02-01 |              2 |
++------------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> select p.pdate as 'year', s.sid as 'student placed' from placement1 p inner join student1 s on p.pid=s.sid where pdate=(select sele^Cx(p.pdate)from student1);
+mysql> select *from placent;
+ERROR 1146 (42S02): Table 'june2024.placent' doesn't exist
+mysql> select *from placement1;
++-----+----------+---------+------------+
+| pid | compname | package | pdate      |
++-----+----------+---------+------------+
+|   1 | TCS      |  400000 | 2020-01-01 |
+|   2 | Infosys  |  360000 | 2020-02-01 |
++-----+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from student1;
++-----+--------+------------------+-----------+---------+
+| sid | name   | email            | contact   | address |
++-----+--------+------------------+-----------+---------+
+|   1 | ram    | ram@gmail.com    | 453785773 | pune    |
+|   2 | shyam  | shyam@gmail.com  |   5436731 | nashik  |
+|   3 | dinesh | dinesh@gmail.com |  54336731 | mumbai  |
++-----+--------+------------------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select*from csjoin;
++------+------+------+
+| sid  | cid  | pid  |
++------+------+------+
+|    1 |    1 |    1 |
+|    1 |    2 |    2 |
+|    2 |    1 |    1 |
+|    2 |    2 |    2 |
++------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> select *from year(pdate) from placement ^C
+mysql> select*from placement1;
++-----+----------+---------+------------+
+| pid | compname | package | pdate      |
++-----+----------+---------+------------+
+|   1 | TCS      |  400000 | 2020-01-01 |
+|   2 | Infosys  |  360000 | 2020-02-01 |
++-----+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select*from csjoin;
++------+------+------+
+| sid  | cid  | pid  |
++------+------+------+
+|    1 |    1 |    1 |
+|    1 |    2 |    2 |
+|    2 |    1 |    1 |
+|    2 |    2 |    2 |
++------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> select year(pdate) from placement1 p join csjoin cs where year(pdate) = (select year(pdate) from placement1 p join csjoin cs group by year(pdate) having max(count(sid)));
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select year(pdate) from placement1 p join csjoin cs where count(sid) = (select max(count(sid)) from placement1 p join csjoin cs group by year(pdate));
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select year(pdate) from placement1 p join csjoin cs group by sid where count(sid) = (select max(count(sid)) from placement1 p join csjoin cs group by year(pdate));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where count(sid) = (select max(count(sid)) from placement1 p join csjoin cs grou' at line 1
+mysql> select year(pdate) from placement1 p join csjoin cs group by sid where count(sid) = (select max(count(sid)) from placement1 p join csjoin cs group by year(pdate));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where count(sid) = (select max(count(sid)) from placement1 p join csjoin cs grou' at line 1
+mysql> select year(pdate) from placement1 p join csjoin cs group by sid having count(sid) = (select max(count(sid)) from placement1 p join csjoin cs group by year(pdate));
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select year(pdate) from placement1 p join csjoin cs group by year(pdate) having count(sid) = (select max(count(sid)) from placement1 p join csjoin cs group by year(pdate));
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select year(pdate) from placement1 p join csjoin cs group by year(pdate) having count(sid) = (select max(count(sid)) from placement1 p join csjoin cs group by year(pdate));^C
+mysql> select max(count(s.sid))as 'Student1 s ' from placement1;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'field list'
+mysql> select p.pdate as 'year',s.sid as 'student palced' from student1 s inner join csjoin cj on p.pid=cj.pid inner join student1 s on s.sid=cj.sid where p.pid=select year(pdate) from pl^C
+mysql> select year(pdate) from placement1 p join csjoin cs on p.pid = cs.pid group by year(pdate) having count(sid) = (select max(count(sid)) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate));
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'june2024.p.pdate'; this is incompatible with sql_mode=only_full_group_by
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate);
++-------------+------------+
+| year(pdate) | count(sid) |
++-------------+------------+
+|        2020 |          4 |
++-------------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into placement1 values(3,'Aurus Ince',420000, '2023-9-15');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate);
++-------------+------------+
+| year(pdate) | count(sid) |
++-------------+------------+
+|        2020 |          4 |
++-------------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into csjoin values(3,2,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate);
++-------------+------------+
+| year(pdate) | count(sid) |
++-------------+------------+
+|        2020 |          4 |
+|        2023 |          1 |
++-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate) having count(sid) = max(count(sid));
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate) having max(count(sid));
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select year(pdate), max(count(sid)) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate);
++-------------+------------+
+| year(pdate) | count(sid) |
++-------------+------------+
+|        2020 |          4 |
+|        2023 |          1 |
++-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate) order by count(sid) desc;
++-------------+------------+
+| year(pdate) | count(sid) |
++-------------+------------+
+|        2020 |          4 |
+|        2023 |          1 |
++-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate) order by count(sid) desc limit 1;
++-------------+------------+
+| year(pdate) | count(sid) |
++-------------+------------+
+|        2020 |          4 |
++-------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate) order by count(sid) limit 1;
++-------------+------------+
+| year(pdate) | count(sid) |
++-------------+------------+
+|        2023 |          1 |
++-------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate) order by count(sid) desc limit 1;
++-------------+------------+
+| year(pdate) | count(sid) |
++-------------+------------+
+|        2020 |          4 |
++-------------+------------+
+1 row in set (0.00 sec)
+
+mysql> Write SQL Query to show the year in which maximum student placed?
+    -> ^C
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate) order by count(sid) desc limit 1;
++-------------+------------+
+| year(pdate) | count(sid) |
++-------------+------------+
+|        2020 |          4 |
++-------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate) order by count(sid) desc limit 0,1;
++-------------+------------+
+| year(pdate) | count(sid) |
++-------------+------------+
+|        2020 |          4 |
++-------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate) order by count(sid) desc limit 1,1;
++-------------+------------+
+| year(pdate) | count(sid) |
++-------------+------------+
+|        2023 |          1 |
++-------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate) order by count(sid) desc limit 0,2;
++-------------+------------+
+| year(pdate) | count(sid) |
++-------------+------------+
+|        2020 |          4 |
+|        2023 |          1 |
++-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate) order by count(sid) desc limit 0,3;
++-------------+------------+
+| year(pdate) | count(sid) |
++-------------+------------+
+|        2020 |          4 |
+|        2023 |          1 |
++-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select year(pdate), count(sid) from placement1 p join csjoin cs on p.pid=cs.pid group by year(pdate) order by count(sid) desc limit 3,3;
+Empty set (0.00 sec)
+
+mysql> Write SQL Query to show the Placement Count Course Wise?
+    -> ^C
+mysql> select * from placement1;
++-----+------------+---------+------------+
+| pid | compname   | package | pdate      |
++-----+------------+---------+------------+
+|   1 | TCS        |  400000 | 2020-01-01 |
+|   2 | Infosys    |  360000 | 2020-02-01 |
+|   3 | Aurus Ince |  420000 | 2023-09-15 |
++-----+------------+---------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from course1;
++----------+------+-------+
+| courseid | name | fees  |
++----------+------+-------+
+|        1 | java | 40000 |
+|        2 | php  | 26000 |
+|        3 | .net | 26000 |
++----------+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student1;
++-----+--------+------------------+-----------+---------+
+| sid | name   | email            | contact   | address |
++-----+--------+------------------+-----------+---------+
+|   1 | ram    | ram@gmail.com    | 453785773 | pune    |
+|   2 | shyam  | shyam@gmail.com  |   5436731 | nashik  |
+|   3 | dinesh | dinesh@gmail.com |  54336731 | mumbai  |
++-----+--------+------------------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select count(s.sid) as 'student count' from student1;
+ERROR 1054 (42S22): Unknown column 's.sid' in 'field list'
+mysql> select count(s.sid) as 'student count' from student1 s;
++---------------+
+| student count |
++---------------+
+|             3 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from csjoin;
++------+------+------+
+| sid  | cid  | pid  |
++------+------+------+
+|    1 |    1 |    1 |
+|    1 |    2 |    2 |
+|    2 |    1 |    1 |
+|    2 |    2 |    2 |
+|    3 |    2 |    3 |
++------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select c.name as 'course name', count(s.sid) as 'placed student count' from student1 s ;
+ERROR 1054 (42S22): Unknown column 'c.name' in 'field list'
+mysql> select c.name as 'course name', count(s.sid) as 'placed student count' from student1 s join csjoin cj on s.sid=cj.sid;
+ERROR 1054 (42S22): Unknown column 'c.name' in 'field list'
+mysql> select c.name as 'course name', count(s.sid) as 'placed student count' from student1 s join csjoin cj on s.sid=cj.sid join course1 c on c.courseid=cj.cid group by c.name;
++-------------+----------------------+
+| course name | placed student count |
++-------------+----------------------+
+| java        |                    2 |
+| php         |                    3 |
++-------------+----------------------+
+2 rows in set (0.00 sec)
+
+mysql> create table Author (id int(10),name varchar(200),birth_year varchar(200) ,death_year varchar(200));
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql> alter table author modify birth_year int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> alter table author modify birth_year int;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table author modify death_year int;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc author;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| id         | int          | YES  |     | NULL    |       |
+| name       | varchar(200) | YES  |     | NULL    |       |
+| birth_year | int          | YES  |     | NULL    |       |
+| death_year | int          | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (0.03 sec)
+
+mysql> drop table author;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table author (id int(10) primary key auto_incremet ,name varchar(255) not null, birth_year int,death_year int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto_incremet ,name varchar(255) not null, birth_year int,death_year int)' at line 1
+mysql> create table author (id int(10) primary key auto_incremet ,name varchar(255) not null, birth_year int,death_year int;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto_incremet ,name varchar(255) not null, birth_year int,death_year int' at line 1
+mysql> create table author (id int(10) primary key auto_incremet ,name varchar(255) not null, birth_year int,death_year int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto_incremet ,name varchar(255) not null, birth_year int,death_year int)' at line 1
+mysql> create table author (id int(10) primary key auto_increment ,name varchar(255) not null, birth_year int,death_year int);
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> desc author;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int          | NO   | PRI | NULL    | auto_increment |
+| name       | varchar(255) | NO   |     | NULL    |                |
+| birth_year | int          | YES  |     | NULL    |                |
+| death_year | int          | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> create table Book(id int(10) primay key auto_increment ,author_id int , title varchar(255) not null, publish_year int ,publishing_house varchar(255),rating double);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primay key auto_increment ,author_id int , title varchar(255) not null, publish_' at line 1
+mysql> create table Book(id int(10) primary key auto_increment ,author_id int , title varchar(255) not null, publish_year int ,publishing_house varchar(255),rating double);
+ERROR 1050 (42S01): Table 'book' already exists
+mysql> create table Book1(id int(10) primary key auto_increment ,author_id int , title varchar(255) not null, publish_year int ,publishing_house varchar(255),rating double);
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> desc Book1;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| id               | int          | NO   | PRI | NULL    | auto_increment |
+| author_id        | int          | YES  |     | NULL    |                |
+| title            | varchar(255) | NO   |     | NULL    |                |
+| publish_year     | int          | YES  |     | NULL    |                |
+| publishing_house | varchar(255) | YES  |     | NULL    |                |
+| rating           | double       | YES  |     | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> create table adaptation(book_id  int(10) primary key,type varchar(200) not null, title varchar(300) not null, release_year int, rating double);
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> desc adaptation;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| book_id      | int          | NO   | PRI | NULL    |       |
+| type         | varchar(200) | NO   |     | NULL    |       |
+| title        | varchar(300) | NO   |     | NULL    |       |
+| release_year | int          | YES  |     | NULL    |       |
+| rating       | double       | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table review (book_id int(10) primary key ,review varchar(255),author varchar(200);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table review (book_id int(10) primary key ,review varchar(255),author varchar(200);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table review (book_id int(10) primary key ,review varchar(255),author varchar(200));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> desc review;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| book_id | int          | NO   | PRI | NULL    |       |
+| review  | varchar(255) | YES  |     | NULL    |       |
+| author  | varchar(200) | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into author values(1,'marcella cole' ,1983,null);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into author values(2,'lisa mullins',1891,1950),(3,'Dennis stokes',1891,1950),(4,'Randolph vasquez',1957,2004),(5,'deniel branson',1965,1990);
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from author;
++----+------------------+------------+------------+
+| id | name             | birth_year | death_year |
++----+------------------+------------+------------+
+|  1 | marcella cole    |       1983 |       NULL |
+|  2 | lisa mullins     |       1891 |       1950 |
+|  3 | Dennis stokes    |       1891 |       1950 |
+|  4 | Randolph vasquez |       1957 |       2004 |
+|  5 | deniel branson   |       1965 |       1990 |
++----+------------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into Book1 values(1,null,'soulless girl',2008,'golden albatros',4.3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into book1 values(2,null,'weak heart',1980,'diarmud inc',3.8),(3,4,'faith of light',1995,'white cloud press',4.3),(4,null,'memory of hope',2000,'rutis enterprises',2.7),(5,6,'warrior of wind',2005,maverick,4.6);
+ERROR 1054 (42S22): Unknown column 'maverick' in 'field list'
+mysql> insert into book1 values(2,null,'weak heart',1980,'diarmud inc',3.8),(3,4,'faith of light',1995,'white cloud press',4.3),(4,null,'memory of hope',2000,'rutis enterprises',2.7),(5,6,'warrior of wind',2005,'maverick',4.6);
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from book1;
++----+-----------+-----------------+--------------+-------------------+--------+
+| id | author_id | title           | publish_year | publishing_house  | rating |
++----+-----------+-----------------+--------------+-------------------+--------+
+|  1 |      NULL | soulless girl   |         2008 | golden albatros   |    4.3 |
+|  2 |      NULL | weak heart      |         1980 | diarmud inc       |    3.8 |
+|  3 |         4 | faith of light  |         1995 | white cloud press |    4.3 |
+|  4 |      NULL | memory of hope  |         2000 | rutis enterprises |    2.7 |
+|  5 |         6 | warrior of wind |         2005 | maverick          |    4.6 |
++----+-----------+-----------------+--------------+-------------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> insert into adaptation
+
+
+
+
+
+
+

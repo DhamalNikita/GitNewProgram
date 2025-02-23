@@ -1,0 +1,129 @@
+create procedure getIdNameSal (IN emp_id int ,IN emp_name varchar(200),IN emp_sal int,IN choice int,OUT p_emp_name varchar(100))
+    -> begin
+    -> IF choice =1 THEN
+    -> insert into employees (id ,name,salary) values(emp_id,emp_name,emp_sal);
+    -> ELSEIF choice=2 THEN
+    -> DELETE FROM employees WHERE id=emp_id;
+    -> ELSEIF choice=3 THEN
+    -> UPDATE employees SET name=emp_name ,salary=emp_sal WHERE  id=emp_id;
+    -> ELSEIF choice =4 THEN
+    -> SELECT name into p_emp_name FROM employees
+    -> WHERE id=emp_id;
+    -> ELSE
+    -> SET p_emp_name='Invalid choice';
+    -> END if;
+    -> END//
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call getIdNameSal(101,'nikita',50000,1,@p_emp_name);
+    -> //
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employees;
+    -> //
++-----+-----------------+--------+
+| id  | name            | salary |
++-----+-----------------+--------+
+|   1 | John Doe        |  55000 |
+|   2 | Jane Smith      |  62000 |
+|   3 | Michael Johnson |  45000 |
+|   4 | Emily Davis     |  75000 |
+|   5 | David Wilson    |  53000 |
+| 101 | nikita          |  50000 |
++-----+-----------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> call getIdNameSal(1,'john Doe',55000,3,@p_emp_name)//
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employees;
+    -> //
++-----+-----------------+--------+
+| id  | name            | salary |
++-----+-----------------+--------+
+|   1 | john Doe        |  55000 |
+|   2 | Jane Smith      |  62000 |
+|   3 | Michael Johnson |  45000 |
+|   4 | Emily Davis     |  75000 |
+|   5 | David Wilson    |  53000 |
+| 101 | nikita          |  50000 |
++-----+-----------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> call getIdNameSal(1,'john Doe',57000,3,@p_emp_name)//
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employees;
+    -> //
++-----+-----------------+--------+
+| id  | name            | salary |
++-----+-----------------+--------+
+|   1 | john Doe        |  57000 |
+|   2 | Jane Smith      |  62000 |
+|   3 | Michael Johnson |  45000 |
+|   4 | Emily Davis     |  75000 |
+|   5 | David Wilson    |  53000 |
+| 101 | nikita          |  50000 |
++-----+-----------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> call getIdNameSal(3,'Neha',67000,3,@p_emp_name)//
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employees//
++-----+--------------+--------+
+| id  | name         | salary |
++-----+--------------+--------+
+|   1 | john Doe     |  57000 |
+|   2 | Jane Smith   |  62000 |
+|   3 | Neha         |  67000 |
+|   4 | Emily Davis  |  75000 |
+|   5 | David Wilson |  53000 |
+| 101 | nikita       |  50000 |
++-----+--------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> call getIdNameSal(101,'nikita',50000,2,@p_emp_name)//
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employees//
++----+--------------+--------+
+| id | name         | salary |
++----+--------------+--------+
+|  1 | john Doe     |  57000 |
+|  2 | Jane Smith   |  62000 |
+|  3 | Neha         |  67000 |
+|  4 | Emily Davis  |  75000 |
+|  5 | David Wilson |  53000 |
++----+--------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> call getIdNameSal(3,'Neha',67000,4,@p_emp_name)//
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employees//
++----+--------------+--------+
+| id | name         | salary |
++----+--------------+--------+
+|  1 | john Doe     |  57000 |
+|  2 | Jane Smith   |  62000 |
+|  3 | Neha         |  67000 |
+|  4 | Emily Davis  |  75000 |
+|  5 | David Wilson |  53000 |
++----+--------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> CALL getIdNameSal(4,'',0,4,@p_emp_name);
+    -> select @p_emp_name as employeename;
+    -> //
+Query OK, 1 row affected (0.00 sec)
+
++--------------+
+| employeename |
++--------------+
+| Emily Davis  |
++--------------+
+1 row in set (0.00 sec)
+
+mysql>
+

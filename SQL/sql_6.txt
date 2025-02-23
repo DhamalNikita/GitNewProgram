@@ -1,0 +1,269 @@
+mysql> create table customer(id int(4) primary key auto_increment,name varchar(200) not null, email varchar(255) not null unique,contact varchar(200) not null unique,salary double(200) not null unique,city varchar(200) not null,discount int not null);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') not null unique,city varchar(200) not null,discount int not null)' at line 1
+mysql> create table customer(id int(4) primary key auto_increment,name varchar(200) not null, email varchar(255) not null unique,contact varchar(200) not null unique,salary double not null,city varchar(200) ,discount int not null);
+Query OK, 0 rows affected, 1 warning (0.06 sec)
+
+mysql> desc customer;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int          | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(200) | NO   |     | NULL    |                |
+| email    | varchar(255) | NO   | UNI | NULL    |                |
+| contact  | varchar(200) | NO   | UNI | NULL    |                |
+| salary   | double       | NO   |     | NULL    |                |
+| city     | varchar(200) | YES  |     | NULL    |                |
+| discount | int          | NO   |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+7 rows in set (0.01 sec)
+
+mysql> insert into customer values(1,'nikita','nikita@gmail.com',9673690946,50000,'asawali',20),(2,'neha','neha@gmai.com',7030489930,60000,'panvel',10),(3,'sandesh',sandesh@gmail.com',6452786452,80000,'pune',20);
+    '> ;
+    '> ;
+    '> ;
+    '> ^C
+mysql> insert into customer values(1,'nikita','nikita@gmail.com',9673690946,50000,'asawali',20),(2,'neha','neha@gmai.com',7030489930,60000,'panvel',10),(3,'sandesh',sandesh@gmail.com',6452786452,80000,'pune',20);
+    '> ^C
+mysql>
+mysql> insert into customer values(1,'nikita','nikita@gmail.com','9673690946',50000,'asawali',20),(2,'neha','neha@gmai.com','7030489930',60000,'panvel',10),(3,'sandesh',sandesh@gmail.com','6452786452',80000,'pune',20);
+    '> ^C
+mysql> insert into customer values(1,'nikita','nikita@gmail.com','9673690946',50000,'asawali',20),(2,'neha','neha@gmai.com','7030489930',60000,'panvel',10),(3,'sandesh',sandesh@gmail.com','6452786452',80000,'pune',20);
+    '> ^C
+mysql> desc customer;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int          | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(200) | NO   |     | NULL    |                |
+| email    | varchar(255) | NO   | UNI | NULL    |                |
+| contact  | varchar(200) | NO   | UNI | NULL    |                |
+| salary   | double       | NO   |     | NULL    |                |
+| city     | varchar(200) | YES  |     | NULL    |                |
+| discount | int          | NO   |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> desc customer;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int          | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(200) | NO   |     | NULL    |                |
+| email    | varchar(255) | NO   | UNI | NULL    |                |
+| contact  | varchar(200) | NO   | UNI | NULL    |                |
+| salary   | double       | NO   |     | NULL    |                |
+| city     | varchar(200) | YES  |     | NULL    |                |
+| discount | int          | NO   |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+mysql> insert into customer values(1,'nikita','nikita@gmail.com','9673690946',50000,'asawali',20),(2,'neha','neha@gmai.com','7030489930',60000,'panvel',10),(3,'sandesh',sandesh@gmail.com','6452786452',80000,'pune',20);
+    '> ;
+    '> ^C
+mysql> insert into customer values(1,'nikita',nikita@gmail.com','87838737',50000,'satara',10000);
+    '> ^C
+mysql>
+mysql> insert into customer values(1,'nikita','nikita@gmail.com','9673690946',50000,'asawali',20),(2,'neha','neha@gmai.com','7030489930',60000,'panvel',10),(3,'sandesh',sandesh@gmail.com','6452786452',80000,'pune',20);
+    '> insert into customer values(1,'nikita','nikita@gmail.com','9673690946',50000,'asawali',20),(2,'neha','neha@gmai.com','7030489930',60000,'panvel',10),(3,'sandesh','sandesh@gmail.com','6452786452',80000,'pune',20);
+    '> ^C
+mysql> insert into customer values(1,'nikita','nikita@gmail.com','9673690946',50000,'asawali',20),(2,'neha','neha@gmai.com','7030489930',60000,'panvel',10),(3,'sandesh','sandesh@gmail.com','6452786452',80000,'pune',20);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;
++----+---------+-------------------+------------+--------+---------+----------+
+| id | name    | email             | contact    | salary | city    | discount |
++----+---------+-------------------+------------+--------+---------+----------+
+|  1 | nikita  | nikita@gmail.com  | 9673690946 |  50000 | asawali |       20 |
+|  2 | neha    | neha@gmai.com     | 7030489930 |  60000 | panvel  |       10 |
+|  3 | sandesh | sandesh@gmail.com | 6452786452 |  80000 | pune    |       20 |
++----+---------+-------------------+------------+--------+---------+----------+
+3 rows in set (0.00 sec)
+
+mysql> insert into customer values(1,'nikita','nikita@gmail.com','9673690946',50000,'asawali',20),(2,'neha','neha@gmai.com','7030489930',60000,'panvel',10),(3,'sandesh','sandesh@gmail.com','6452786452',80000,'pune',20);
+ERROR 1062 (23000): Duplicate entry '1' for key 'customer.PRIMARY'
+mysql> insert into values('0','akanksha','5634258769',50000,'satara',30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values('0','akanksha','5634258769',50000,'satara',30)' at line 1
+mysql> insert into values('0','akanksha','akki@gmail.com','5634258769',50000,'satara',30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values('0','akanksha','akki@gmail.com','5634258769',50000,'satara',30)' at line 1
+mysql> insert into values('0','akanksha','akki@gmail.com','5634258769',50000,'satara',30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values('0','akanksha','akki@gmail.com','5634258769',50000,'satara',30)' at line 1
+mysql> insert into values('0','akanksha','akki@gmail.com','5634258769',50000,'satara',30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values('0','akanksha','akki@gmail.com','5634258769',50000,'satara',30)' at line 1
+mysql> insert into values('null','akanksha','akki@gmail.com','5634258769',50000,'satara',30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values('null','akanksha','akki@gmail.com','5634258769',50000,'satara',30)' at line 1
+mysql> insert into values(4,'akanksha','akki@gmail.com','5634258769',50000,'satara',30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values(4,'akanksha','akki@gmail.com','5634258769',50000,'satara',30)' at line 1
+mysql> insert into values(4,'akanksha','akki@gmail.com','5634258769',50000,'satara',30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values(4,'akanksha','akki@gmail.com','5634258769',50000,'satara',30)' at line 1
+mysql> insert into values(4,'aaki','akki@gmail.com','3425678546',40000,'satara',20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values(4,'aaki','akki@gmail.com','3425678546',40000,'satara',20)' at line 1
+mysql> insert into customer values(4,'aaki','akki@gmail.com','3425678546',40000,'satara',20);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values('0','arati','arati@gmail.com','3425648546',80000,'pimpode',40);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values('0','sanika','sanu@gmail.com','2365648546',20000,'bamnoli',40);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from customer;
++----+---------+-------------------+------------+--------+---------+----------+
+| id | name    | email             | contact    | salary | city    | discount |
++----+---------+-------------------+------------+--------+---------+----------+
+|  1 | nikita  | nikita@gmail.com  | 9673690946 |  50000 | asawali |       20 |
+|  2 | neha    | neha@gmai.com     | 7030489930 |  60000 | panvel  |       10 |
+|  3 | sandesh | sandesh@gmail.com | 6452786452 |  80000 | pune    |       20 |
+|  4 | aaki    | akki@gmail.com    | 3425678546 |  40000 | satara  |       20 |
+|  5 | arati   | arati@gmail.com   | 3425648546 |  80000 | pimpode |       40 |
+|  6 | sanika  | sanu@gmail.com    | 2365648546 |  20000 | bamnoli |       40 |
++----+---------+-------------------+------------+--------+---------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from customer where dicount>10;
+ERROR 1054 (42S22): Unknown column 'dicount' in 'where clause'
+mysql> select * from customer where discount>10;
++----+---------+-------------------+------------+--------+---------+----------+
+| id | name    | email             | contact    | salary | city    | discount |
++----+---------+-------------------+------------+--------+---------+----------+
+|  1 | nikita  | nikita@gmail.com  | 9673690946 |  50000 | asawali |       20 |
+|  3 | sandesh | sandesh@gmail.com | 6452786452 |  80000 | pune    |       20 |
+|  4 | aaki    | akki@gmail.com    | 3425678546 |  40000 | satara  |       20 |
+|  5 | arati   | arati@gmail.com   | 3425648546 |  80000 | pimpode |       40 |
+|  6 | sanika  | sanu@gmail.com    | 2365648546 |  20000 | bamnoli |       40 |
++----+---------+-------------------+------------+--------+---------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customer where city='panvel' and dicount=10 and name like'n%' and contact in('70%','%70','%70%');
+ERROR 1054 (42S22): Unknown column 'dicount' in 'where clause'
+mysql> select * from customer where city='panvel' and discount=10 and name like'n%' and contact in('70%','%70','%70%');
+Empty set (0.00 sec)
+
+mysql> select * from customer where city='panvel' and discount=10 and name like'n%' and contact like '70%' or contact like '%70;
+    '> select * from customer where city='panvel' and discount=10 and name like'n%' and contact like '70%' or contact like '%70';
+    '> ^C
+mysql> select * from customer where city='panvel' and discount=10 and name like'n%' and contact like '70%';
++----+------+---------------+------------+--------+--------+----------+
+| id | name | email         | contact    | salary | city   | discount |
++----+------+---------------+------------+--------+--------+----------+
+|  2 | neha | neha@gmai.com | 7030489930 |  60000 | panvel |       10 |
++----+------+---------------+------------+--------+--------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where city='panvel' and discount=10 and name like'n%' and contact like '%70%';
++----+------+---------------+------------+--------+--------+----------+
+| id | name | email         | contact    | salary | city   | discount |
++----+------+---------------+------------+--------+--------+----------+
+|  2 | neha | neha@gmai.com | 7030489930 |  60000 | panvel |       10 |
++----+------+---------------+------------+--------+--------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where email like '@gmail.com%' and name like '______';
+Empty set (0.00 sec)
+
+mysql> select * from customer where email like '@gmail.com%' and name like '______';
+Empty set (0.00 sec)
+
+mysql> select * from customer where email like '%______@gmail.com';
++----+---------+-------------------+------------+--------+---------+----------+
+| id | name    | email             | contact    | salary | city    | discount |
++----+---------+-------------------+------------+--------+---------+----------+
+|  1 | nikita  | nikita@gmail.com  | 9673690946 |  50000 | asawali |       20 |
+|  3 | sandesh | sandesh@gmail.com | 6452786452 |  80000 | pune    |       20 |
++----+---------+-------------------+------------+--------+---------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customer where email like '______@gmail.com';
++----+--------+------------------+------------+--------+---------+----------+
+| id | name   | email            | contact    | salary | city    | discount |
++----+--------+------------------+------------+--------+---------+----------+
+|  1 | nikita | nikita@gmail.com | 9673690946 |  50000 | asawali |       20 |
++----+--------+------------------+------------+--------+---------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer order by dicount;
+ERROR 1054 (42S22): Unknown column 'dicount' in 'order clause'
+mysql> select * from customer order by discount;
++----+---------+-------------------+------------+--------+---------+----------+
+| id | name    | email             | contact    | salary | city    | discount |
++----+---------+-------------------+------------+--------+---------+----------+
+|  2 | neha    | neha@gmai.com     | 7030489930 |  60000 | panvel  |       10 |
+|  1 | nikita  | nikita@gmail.com  | 9673690946 |  50000 | asawali |       20 |
+|  3 | sandesh | sandesh@gmail.com | 6452786452 |  80000 | pune    |       20 |
+|  4 | aaki    | akki@gmail.com    | 3425678546 |  40000 | satara  |       20 |
+|  5 | arati   | arati@gmail.com   | 3425648546 |  80000 | pimpode |       40 |
+|  6 | sanika  | sanu@gmail.com    | 2365648546 |  20000 | bamnoli |       40 |
++----+---------+-------------------+------------+--------+---------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from customer order by name;
++----+---------+-------------------+------------+--------+---------+----------+
+| id | name    | email             | contact    | salary | city    | discount |
++----+---------+-------------------+------------+--------+---------+----------+
+|  4 | aaki    | akki@gmail.com    | 3425678546 |  40000 | satara  |       20 |
+|  5 | arati   | arati@gmail.com   | 3425648546 |  80000 | pimpode |       40 |
+|  2 | neha    | neha@gmai.com     | 7030489930 |  60000 | panvel  |       10 |
+|  1 | nikita  | nikita@gmail.com  | 9673690946 |  50000 | asawali |       20 |
+|  3 | sandesh | sandesh@gmail.com | 6452786452 |  80000 | pune    |       20 |
+|  6 | sanika  | sanu@gmail.com    | 2365648546 |  20000 | bamnoli |       40 |
++----+---------+-------------------+------------+--------+---------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from customer where city like in('pune','nashik','mumbai');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in('pune','nashik','mumbai')' at line 1
+mysql> select * from customer where city like in('pune','nashik','mumbai');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in('pune','nashik','mumbai')' at line 1
+mysql> select * from customer where city in('pune','nashik','mumbai');
++----+---------+-------------------+------------+--------+------+----------+
+| id | name    | email             | contact    | salary | city | discount |
++----+---------+-------------------+------------+--------+------+----------+
+|  3 | sandesh | sandesh@gmail.com | 6452786452 |  80000 | pune |       20 |
++----+---------+-------------------+------------+--------+------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer where city='satara' and name like '____' and discount>1000;
+Empty set (0.00 sec)
+
+mysql> select * from customer where city='satara' and name like '____' and discount>10;
++----+------+----------------+------------+--------+--------+----------+
+| id | name | email          | contact    | salary | city   | discount |
++----+------+----------------+------------+--------+--------+----------+
+|  4 | aaki | akki@gmail.com | 3425678546 |  40000 | satara |       20 |
++----+------+----------------+------------+--------+--------+----------+
+1 row in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

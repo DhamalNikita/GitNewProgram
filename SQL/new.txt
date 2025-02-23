@@ -1,0 +1,10 @@
+mysql> select c.cust_name as 'customer name', c.city as 'customer city', s.name as 'salesman',s.city as 'salesman city' ,s.commission as 'commission' from salesman s join customer1 c on s.salesman_id=c.salesman_id where s.city<>c.city and s.commission>12;
++---------------+---------------+----------+---------------+------------+
+| customer name | customer city | salesman | salesman city | commission |
++---------------+---------------+----------+---------------+------------+
+| Nick Rimando  | Mumbai        | nikita   | pune          |         20 |
+| brad davis    | panvel        | nikita   | pune          |         20 |
+| gemes gosling | pune          | neha     | mumbai        |         30 |
+| graham zusi   | california    | neha     | mumbai        |         30 |
++---------------+---------------+----------+---------------+------------+
+4 rows in set (0.00 sec)

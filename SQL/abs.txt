@@ -1,0 +1,425 @@
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.40 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use jun2024
+ERROR 1049 (42000): Unknown database 'jun2024'
+mysql> use june2024;
+Database changed
+mysql> create table course(courseid int  primary key auto_increment,name varchar(200) not null ,fees int(7) not null);
+ERROR 1050 (42S01): Table 'course' already exists
+mysql> create table course1(courseid int  primary key auto_increment,name varchar(200) not null ,fees int(7) not null);
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> desc course1;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| courseid | int          | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(200) | NO   |     | NULL    |                |
+| fees     | int          | NO   |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+mysql> create table student1(sid int(5) primary key auto_increment, name varchar(200) not null, email varchar(200) not null unique);
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql> desc student1;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| sid   | int          | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(200) | NO   |     | NULL    |                |
+| email | varchar(200) | NO   | UNI | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> create table placement1(pid int(5) primary key auto_increment,compname varchar(200) not null,package int (5) not null,pdate date not null);
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> desc placement1;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| pid      | int          | NO   | PRI | NULL    | auto_increment |
+| compname | varchar(200) | NO   |     | NULL    |                |
+| package  | int          | NO   |     | NULL    |                |
+| pdate    | date         | NO   |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> create table csjoin(sid int(5),foreign key(sid)references student1(sid),cid int(5),foreign key(cid)references course1(courseid),pid int(5),foreign key(pid)references placement1);
+ERROR 1239 (42000): Incorrect foreign key definition for 'foreign key without name': Key reference and table reference don't match
+mysql> create table csjoin(sid int(5),foreign key(sid)references student1(sid),cid int(5),foreign key(cid)references course1(courseid),pid int(5),foreign key(pid)references placement1);
+ERROR 1239 (42000): Incorrect foreign key definition for 'foreign key without name': Key reference and table reference don't match
+mysql> create table csjoin(sid int(5),foreign key(sid)references student1(sid),cid int(5),foreign key(cid)references course1(courseid),pid int(5),foreign key(pid)references placement1(pid));
+Query OK, 0 rows affected, 3 warnings (0.05 sec)
+
+mysql> desc csjoin;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| sid   | int  | YES  | MUL | NULL    |       |
+| cid   | int  | YES  | MUL | NULL    |       |
+| pid   | int  | YES  | MUL | NULL    |       |
++-------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table csjoin(sid int(5),foreign key(sid) references studenet1(sid),cid int(5),foregin key(cid) references course1(courseid),pid int(5),foregin key(pid) refereneces placement1(pid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'key(cid) references course1(courseid),pid int(5),foregin key(pid) refereneces pl' at line 1
+mysql> desc csjoin;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| sid   | int  | YES  | MUL | NULL    |       |
+| cid   | int  | YES  | MUL | NULL    |       |
+| pid   | int  | YES  | MUL | NULL    |       |
++-------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc course1;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| courseid | int          | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(200) | NO   |     | NULL    |                |
+| fees     | int          | NO   |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into course1(1,'java',26000),(2,'php',26000),(3,'.net',26000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,'java',26000),(2,'php',26000),(3,'.net',26000)' at line 1
+mysql> insert into course1 values(1,'java',26000),(2,'php',26000),(3,'.net',26000);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from course1;
++----------+------+-------+
+| courseid | name | fees  |
++----------+------+-------+
+|        1 | java | 26000 |
+|        2 | php  | 26000 |
+|        3 | .net | 26000 |
++----------+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc student1;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| sid   | int          | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(200) | NO   |     | NULL    |                |
+| email | varchar(200) | NO   | UNI | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> alter table studnet1 add contact int(10) not null unique, address varchar(200) not null);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'address varchar(200) not null)' at line 1
+mysql> alter table studnet1 add contact int(10) not null unique);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> alter table studnet1 add contact int(10) not null unique;
+ERROR 1146 (42S02): Table 'june2024.studnet1' doesn't exist
+mysql> alter table student1 add contact int(10) not null unique;
+Query OK, 0 rows affected, 1 warning (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> alter table student1 add address varchar(200) not null;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student1;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| sid     | int          | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(200) | NO   |     | NULL    |                |
+| email   | varchar(200) | NO   | UNI | NULL    |                |
+| contact | int          | NO   | UNI | NULL    |                |
+| address | varchar(200) | NO   |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student1(1,'ram','ram@gmail.com',4537857734,'pune');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,'ram','ram@gmail.com',4537857734,'pune')' at line 1
+mysql> insert into student1 values(1,'ram','ram@gmail.com',4537857734,'pune');
+ERROR 1264 (22003): Out of range value for column 'contact' at row 1
+mysql> insert into student1 values(1,'ram','ram@gmail.com',453785773,'pune');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student1('0','shyam','shyam@gmail.com',5436731,'nashik');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''0','shyam','shyam@gmail.com',5436731,'nashik')' at line 1
+mysql> insert into student1(0,'shyam','shyam@gmail.com',5436731,'nashik');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '0,'shyam','shyam@gmail.com',5436731,'nashik')' at line 1
+mysql> insert into student1 values('0','shyam','shyam@gmail.com',5436731,'nashik');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student1;
++-----+-------+-----------------+-----------+---------+
+| sid | name  | email           | contact   | address |
++-----+-------+-----------------+-----------+---------+
+|   1 | ram   | ram@gmail.com   | 453785773 | pune    |
+|   2 | shyam | shyam@gmail.com |   5436731 | nashik  |
++-----+-------+-----------------+-----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert into student1 values('null','dinesh','dinesh@gmail.com',54336731,'mumbai');
+ERROR 1366 (HY000): Incorrect integer value: 'null' for column 'sid' at row 1
+mysql> insert into student1 values'null,'dinesh','dinesh@gmail.com',54336731,'mumbai');
+    '> ;
+    '> ^C
+mysql> insert into student1 values(null,'dinesh','dinesh@gmail.com',54336731,'mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student1;
++-----+--------+------------------+-----------+---------+
+| sid | name   | email            | contact   | address |
++-----+--------+------------------+-----------+---------+
+|   1 | ram    | ram@gmail.com    | 453785773 | pune    |
+|   2 | shyam  | shyam@gmail.com  |   5436731 | nashik  |
+|   3 | dinesh | dinesh@gmail.com |  54336731 | mumbai  |
++-----+--------+------------------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> desc placement1;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| pid      | int          | NO   | PRI | NULL    | auto_increment |
+| compname | varchar(200) | NO   |     | NULL    |                |
+| package  | int          | NO   |     | NULL    |                |
+| pdate    | date         | NO   |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into placement1 values(1,'TCS',360000,01/01/2020);
+ERROR 1292 (22007): Incorrect date value: '0.000495049504950495' for column 'pdate' at row 1
+mysql> insert into placement1 values(1,'TCS',360000,'01/01/2020');
+ERROR 1292 (22007): Incorrect date value: '01/01/2020' for column 'pdate' at row 1
+mysql> insert into placement1 values(1,'TCS',360000,'1-1-2020');
+ERROR 1292 (22007): Incorrect date value: '1-1-2020' for column 'pdate' at row 1
+mysql> insert into placement1 values(1,'TCS',360000,1-1-2020);
+ERROR 1292 (22007): Incorrect date value: '-2020' for column 'pdate' at row 1
+mysql> insert into placement1 values(1,'TCS',360000,'2020-01-01);
+    '> insert into placement1 values(1,'TCS',360000,'2020-01-01'^C
+mysql> insert into placement1 values(1,'TCS',360000,1-1-2020');
+    '> ^C
+mysql> insert into placement1 values(1,'TCS',360000,'1-1-2020');
+ERROR 1292 (22007): Incorrect date value: '1-1-2020' for column 'pdate' at row 1
+mysql> insert into placement1 values(1,'TCS',360000,'2020-01-01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into placement1 values(2,'Infosys',360000,'2020-02-01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from placement1;
++-----+----------+---------+------------+
+| pid | compname | package | pdate      |
++-----+----------+---------+------------+
+|   1 | TCS      |  360000 | 2020-01-01 |
+|   2 | Infosys  |  360000 | 2020-02-01 |
++-----+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> desc cjoin;
+ERROR 1146 (42S02): Table 'june2024.cjoin' doesn't exist
+mysql> desc csjoin;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| sid   | int  | YES  | MUL | NULL    |       |
+| cid   | int  | YES  | MUL | NULL    |       |
+| pid   | int  | YES  | MUL | NULL    |       |
++-------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into csjoin values(1,1,1),(1,2,2),(2,1,1),(2,2,2);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from csjoin;
++------+------+------+
+| sid  | cid  | pid  |
++------+------+------+
+|    1 |    1 |    1 |
+|    1 |    2 |    2 |
+|    2 |    1 |    1 |
+|    2 |    2 |    2 |
++------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from course1;
++----------+------+-------+
+| courseid | name | fees  |
++----------+------+-------+
+|        1 | java | 26000 |
+|        2 | php  | 26000 |
+|        3 | .net | 26000 |
++----------+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student1;
++-----+--------+------------------+-----------+---------+
+| sid | name   | email            | contact   | address |
++-----+--------+------------------+-----------+---------+
+|   1 | ram    | ram@gmail.com    | 453785773 | pune    |
+|   2 | shyam  | shyam@gmail.com  |   5436731 | nashik  |
+|   3 | dinesh | dinesh@gmail.com |  54336731 | mumbai  |
++-----+--------+------------------+-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from placement1;
++-----+----------+---------+------------+
+| pid | compname | package | pdate      |
++-----+----------+---------+------------+
+|   1 | TCS      |  360000 | 2020-01-01 |
+|   2 | Infosys  |  360000 | 2020-02-01 |
++-----+----------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from csjoin;
++------+------+------+
+| sid  | cid  | pid  |
++------+------+------+
+|    1 |    1 |    1 |
+|    1 |    2 |    2 |
+|    2 |    1 |    1 |
+|    2 |    2 |    2 |
++------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from course1;
++----------+------+-------+
+| courseid | name | fees  |
++----------+------+-------+
+|        1 | java | 26000 |
+|        2 | php  | 26000 |
+|        3 | .net | 26000 |
++----------+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from course1 whose fees>10000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'fees>10000' at line 1
+mysql> select * from course1 where fees>10000;
++----------+------+-------+
+| courseid | name | fees  |
++----------+------+-------+
+|        1 | java | 26000 |
+|        2 | php  | 26000 |
+|        3 | .net | 26000 |
++----------+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from course1 where fees in(10000,20000,30000,40000);
+Empty set (0.00 sec)
+
+mysql> select * from course1 where fees in(10000,26000,30000,40000);
++----------+------+-------+
+| courseid | name | fees  |
++----------+------+-------+
+|        1 | java | 26000 |
+|        2 | php  | 26000 |
+|        3 | .net | 26000 |
++----------+------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from course1 where name like 'j%a';
++----------+------+-------+
+| courseid | name | fees  |
++----------+------+-------+
+|        1 | java | 26000 |
++----------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from course1 where name like '___';
++----------+------+-------+
+| courseid | name | fees  |
++----------+------+-------+
+|        2 | php  | 26000 |
++----------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select s.name as 'Student Name',c.name as 'Course Name' from student s inner join csjoin cj on s.sid=cj.sid inner join course c on c.courseid=cj.cid;
+ERROR 1054 (42S22): Unknown column 'c.courseid' in 'on clause'
+mysql> select s.name as 'Student Name',c.name as 'Course Name' from student s inner join csjoin cj on s.sid=cj.sid inner join course c on c.cid=cj.cid;
+Empty set (0.00 sec)
+
+mysql> select s.name as 'Student Name',c.name as 'Course Name' from student s inner join csjoin cj on s.sid=cj.sid inner join course c on c.courseid=cj.cid;
+ERROR 1054 (42S22): Unknown column 'c.courseid' in 'on clause'
+mysql> select s.name as 'Student Name',c.name as 'Course Name' from student s inner join csjoin cj on s.sid=cj.sid inner join course c on c.courseid=cj.courseid;
+ERROR 1054 (42S22): Unknown column 'c.courseid' in 'on clause'
+mysql> select s.name as 'Student Name',c.name as 'Course Name' from student s inner join csjoin cj on s.sid=cj.sid inner join course c on c.courseid=cj.cid;
+ERROR 1054 (42S22): Unknown column 'c.courseid' in 'on clause'
+mysql> select s.name as 'Student Name',c.name as 'Course Name' from student s inner join csjoin cj on s.sid=cj.sid inner join course c on c.courseid=cj.courseid;
+ERROR 1054 (42S22): Unknown column 'c.courseid' in 'on clause'
+mysql> select s.name as 'Student Name',c.name as 'Course Name' from student s inner join csjoin cj on s.sid=cj.sid inner join course c on c.courseid=cj.cid;
+ERROR 1054 (42S22): Unknown column 'c.courseid' in 'on clause'
+mysql> select s.name as 'Student Name',c.name as 'Course Name' from student s inner join csjoin cj on s.sid=cj.sid inner join course c on c.courseid=cj.cid;
+ERROR 1054 (42S22): Unknown column 'c.courseid' in 'on clause'
+mysql> select s.name as 'Student Name',c.name as 'Course Name' from student s inner join csjoin cj on s.sid=cj.sid inner join course c on c.courseid=cj.cid;
+ERROR 1054 (42S22): Unknown column 'c.courseid' in 'on clause'
+mysql> select s.name as 'Student Name',c.name as 'Course Name' from student1 s inner join csjoin cj on s.sid=cj.sid inner join course1 c on c.courseid=cj.courseid;
+ERROR 1054 (42S22): Unknown column 'cj.courseid' in 'on clause'
+mysql> select s.name as 'Student Name',c.name as 'Course Name' from student1 s inner join csjoin cj on s.sid=cj.sid inner join course1 c on c.courseid=cj.cid;
++--------------+-------------+
+| Student Name | Course Name |
++--------------+-------------+
+| ram          | java        |
+| ram          | php         |
+| shyam        | java        |
+| shyam        | php         |
++--------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select c.name as 'Course Name', count(s.id) as 'Student Count' from student1 s right join csjoin cj on s.sid=cj.sid rigth join course1 c on c.courseid=cj.cid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rigth join course1 c on c.courseid=cj.cid' at line 1
+mysql> select c.name as 'Course Name', count(s.id) as 'Student Count' from student1 s right join csjoin cj on s.sid=cj.sid rigth join course1 c on c.courseid=cj.cid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rigth join course1 c on c.courseid=cj.cid' at line 1
+mysql> select c.name as 'Course Name', count(s.id) as 'Student Count' from student1 s right join csjoin cj on s.sid=cj.sid right join course1 c on c.courseid=cj.cid;
+ERROR 1054 (42S22): Unknown column 's.id' in 'field list'
+mysql> select c.name as 'Course Name', count(s.sid) as 'Student Count' from student1 s right join csjoin cj on s.sid=cj.sid right join course1 c on c.courseid=cj.cid;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'june2024.c.name'; this is incompatible with sql_mode=only_full_group_by
+mysql> select c.name as 'Course Name', count(s.sid) as 'Student Count' from student1 s right join csjoin cj on s.sid=cj.sid right join course1 c on c.courseid=cj.cid group by c.name having count (s.name)>=0 order by count(s.name)desc;
+ERROR 1630 (42000): FUNCTION june2024.count does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
